@@ -4,7 +4,7 @@ import spiral
 import color
 import time
 
-def generate(l, xsize, ysize, font_location, fntsize, theme, condense):
+def generate(l, xsize, ysize, font_location, fntsize, minval, theme, condense):
 
     try:
 
@@ -12,7 +12,7 @@ def generate(l, xsize, ysize, font_location, fntsize, theme, condense):
 
         if(len(l) > 10):
             _drau = ImageDraw.Draw(im)
-            fntu = ImageFont.truetype(font_location, size=round(l[0][1] * fntsize))
+            fntu = ImageFont.truetype(font_location, size=round((l[0][1] - minval) * fntsize))
             _sizu = _drau.textsize(l[0][0], font=fntu)
 
             im = Image.new('L', (2*(xsize + _sizu[0]), 2*(ysize + _sizu[0])), 0).convert('RGB')
@@ -30,7 +30,12 @@ def generate(l, xsize, ysize, font_location, fntsize, theme, condense):
             _draw = ImageDraw.Draw(im)
 
             factor = 1
-            d_fontar = round(i[1] * fntsize * factor)
+            d_fontar = round((i[1] - minval) * fntsize * factor)
+            if(d_fontar <= 0):
+                if(len(l) < 1000):
+                    d_fontar = 38
+                if(len(l) < 20):
+                    d_fontar = 60
 
             fnt = ImageFont.truetype(font_location, size=d_fontar)
 

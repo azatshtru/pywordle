@@ -1,5 +1,6 @@
 import generator
 import numpy
+import math
 from PIL import Image
 
 def custom_sort(t):
@@ -15,14 +16,8 @@ def reduce_variance(l, factor):
         l[i] = ((l[i] - mean)/factor) + mean
     return l
 
-def assemble(datafile, w, h, font, desizing=9, variance_factor=8, min_freq=0, theme="White", condense=False, ignore=True):
-
-    if(desizing < 8):
-        desizing = 8
+def assemble(datafile, w, h, font, sizing=100, variance_factor=8, min_freq=0, theme="White", condense=False, ignore=True):
     
-    if(variance_factor < 7):
-        variance_factor = 7
-
     l = []
     datalist = []
     data = {}
@@ -66,18 +61,22 @@ def assemble(datafile, w, h, font, desizing=9, variance_factor=8, min_freq=0, th
     keys = list(data.keys())
     values = list(data.values())
    
+    for i in range(len(values)):
+        values[i] = math.log(values[i])
+
     values = reduce_variance(values, variance_factor)
 
-    datalen = [len(x) for x in l]
     try:
-        lsum = (w * w)/(sum(datalen) * desizing)
-
+        maxval = max(values)
+        if(maxval - min(values) == 0): maxval = 2
+        
+        lsum = sizing/(maxval - min(values))
         for j in range(len(keys)):
             datalist.append((keys[j], values[j]))
 
         datalist.sort(key=custom_sort, reverse=True)
 
-        im = generator.generate(datalist, w, h, font, lsum, theme, condense)
+        im = generator.generate(datalist, w, h, font, lsum, min(values), theme, condense)
 
         print(len(l))
 

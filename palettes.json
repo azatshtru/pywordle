@@ -10,5 +10,6 @@
     "ToweringOver": ["#FFD53D", "#40B0DF", "#0067B3", "#0000A3"],
     "EverythingNice": ["#FD49A0", "#A16AE8", "#B4FEE7", "#603F8B"],
     "White": ["#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF"],
-    "India": ["#FF8000", "#FF8000", "#008000", "FFFFFF", "FFFFFF"]
+    "India": ["#FF8000", "#FF8000", "#008000", "FFFFFF", "FFFFFF"],
+    "Shrek": ["#C5EE7D", "#8CB04E", "#5C452D", "#E1DFB6", "#7A9244"]
 }
